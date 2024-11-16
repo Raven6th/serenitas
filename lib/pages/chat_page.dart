@@ -10,7 +10,7 @@ class MyChatRoomPage extends StatefulWidget {
 
 class _MyChatRoomPageState extends State<MyChatRoomPage> {
   final List<Map<String, String>> messages = [
-    {"text": "Hi there!", "sender": "Assistant"}
+    {"text": "Halo!", "sender": "Serenitas"}
   ];
 
   final TextEditingController _chatController = TextEditingController();
@@ -25,7 +25,6 @@ class _MyChatRoomPageState extends State<MyChatRoomPage> {
       ),
       body: Column(
         children: [
-          // Display chat bubbles
           Expanded(
             child: ListView.builder(
               itemCount: messages.length,
@@ -37,13 +36,12 @@ class _MyChatRoomPageState extends State<MyChatRoomPage> {
               },
             ),
           ),
-          // TextField for user input
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: TextField(
               controller: _chatController,
               decoration: InputDecoration(
-                hintText: 'Type a message...',
+                hintText: 'Ketik pesan anda...',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12.0),
                 ),
@@ -52,20 +50,20 @@ class _MyChatRoomPageState extends State<MyChatRoomPage> {
                   onPressed: _sendMessage,
                 ),
               ),
-              onSubmitted: (_) => _sendMessage(), // Trigger send on "Enter"
+              onSubmitted: (_) => _sendMessage(),
             ),
           ),
         ],
       ),
       drawer: CustomDrawer(
-        username: 'John Doe',
-        gender: 'Male',
+        username: 'Username',
+        gender: 'Gender',
         imagepath: 'assets/images/profile.jpg',
         boxColor: Colors.purple,
         buttons: [
-          {'name': 'Profile', 'target': '/profile'},
-          {'name': 'Settings', 'target': '/settings'},
-          {'name': 'Help', 'target': '/help'},
+          {'name': 'Pengaturan', 'target': '/setting'},
+          {'name': 'Login', 'target': '/login'},
+          {'name': 'Register', 'target': '/register'},
         ],
       ),
     );
@@ -77,7 +75,7 @@ class _MyChatRoomPageState extends State<MyChatRoomPage> {
       setState(() {
         messages.add({
           "text": _chatController.text,
-          "sender": "User", // Hardcoded for simplicity; can be dynamic
+          "sender": "User",
         });
       });
       _chatController.clear();

@@ -16,6 +16,7 @@ class _MySignUpPageState extends State<MySignUpPage> {
       TextEditingController();
   bool obscureText = true;
   String? _selectedGender;
+
   void _togglePasswordVisibility() {
     setState(() {
       obscureText = !obscureText;
@@ -25,83 +26,84 @@ class _MySignUpPageState extends State<MySignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color.fromARGB(255, 245, 245, 245),
       appBar: AppBar(
-        backgroundColor: Colors.lightBlue,
-        title: const Row(
+        backgroundColor: const Color.fromARGB(255, 157, 54, 175),
+        title: const Text(
+          'Sign Up',
+          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        ),
+        centerTitle: true,
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Icon(Icons.person_add),
-            SizedBox(width: 20),
-            Text(
-              'Sign Up',
-              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+            const SizedBox(height: 20),
+            MyTextField(
+              controller: usernameController,
+              hint: 'Masukkan username...',
+              label: 'Username',
+            ),
+            const SizedBox(height: 20),
+            MyPassWordField(
+              controller: passwordController,
+              obsecure: obscureText,
+              label: 'Password',
+              onvisibility: _togglePasswordVisibility,
+            ),
+            const SizedBox(height: 20),
+            MyPassWordField(
+              controller: confirmPasswordController,
+              obsecure: obscureText,
+              label: 'Konfirmasi Password',
+              onvisibility: _togglePasswordVisibility,
+            ),
+            const SizedBox(height: 20),
+            Row(
+              children: [
+                Radio<String>(
+                  value: 'Male',
+                  groupValue: _selectedGender,
+                  onChanged: (value) {
+                    setState(() {
+                      _selectedGender = value;
+                    });
+                  },
+                ),
+                const Text('Male'),
+              ],
+            ),
+            Row(
+              children: [
+                Radio<String>(
+                  value: 'Female',
+                  groupValue: _selectedGender,
+                  onChanged: (value) {
+                    setState(() {
+                      _selectedGender = value;
+                    });
+                  },
+                ),
+                const Text('Female'),
+              ],
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.purple,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              onPressed: () {
+                // sign up/register
+              },
+              child: Text('Sign Up', style: TextStyle(color: Colors.black),),
             ),
           ],
         ),
-      ),
-      body: ListView(
-        padding: const EdgeInsets.all(20),
-        children: [
-          MyTextField(
-            controller: usernameController,
-            hint: 'Masukkan Username Anda...',
-            label: 'Username',
-          ),
-          const SizedBox(height: 20),
-          MyPassWordField(
-            controller: passwordController,
-            obsecure: obscureText,
-            label: 'Password',
-            onvisibility: _togglePasswordVisibility,
-          ),
-          const SizedBox(height: 20),
-          MyPassWordField(
-            controller: confirmPasswordController,
-            obsecure: obscureText,
-            label: 'Konfirmasi password',
-            onvisibility: _togglePasswordVisibility,
-          ),
-          const SizedBox(height: 20),
-          Row(
-            children: [
-              Radio<String>(
-                value: 'Cowo', // Nilai yang akan disimpan jika dipilih
-                groupValue: _selectedGender, // Grup nilai radio button
-                onChanged: (value) {
-                  setState(() {
-                    _selectedGender = value; // Mengubah nilai yang dipilih
-                  });
-                },
-              ),
-              Text(
-                'Laki-laki',
-              ),
-            ],
-          ),
-          Row(children: [
-            Radio<String>(
-              value: 'Cewe', // Nilai yang akan disimpan jika dipilih
-              groupValue: _selectedGender, // Grup nilai radio button
-              onChanged: (value) {
-                setState(() {
-                  _selectedGender = value; // Mengubah nilai yang dipilih
-                });
-              },
-            ),
-            Text(
-              'Cewe',
-            ),
-          ]),
-          const SizedBox(height: 20),
-          // Container(
-          //   width: double.infinity,
-          //   padding: EdgeInsets.symmetric(horizontal: 20),
-          //   child: ElevatedButton(
-          //     onPressed: _signUp,
-          //     child: const Text('Sign Up'),
-          //   ),
-          // ),
-        ],
       ),
     );
   }

@@ -16,65 +16,65 @@ class _MyLoginPageState extends State<MyLoginPage> {
 
   void _togglePasswordVisibility() {
     setState(() {
-      obscureText = !obscureText; // Mengubah status visibility
+      obscureText = !obscureText;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color.fromARGB(255, 245, 245, 245),
       appBar: AppBar(
-        backgroundColor: Colors.lightBlue,
-        title: const Row(
-          children: [
-            // Icon(Icons.login),
-            // SizedBox(
-            //   width: 20,
-            // ),
-            Text(
-              'Login',
-              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-            ),
-          ],
+        backgroundColor: const Color.fromARGB(255, 157, 54, 175),
+        title: const Text(
+          'Login',
+          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
+        centerTitle: true,
       ),
-      body: ListView(
-        children: [
-          Container(
-            margin: const EdgeInsets.only(top: 20),
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: MyTextField(
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const SizedBox(height: 20),
+            MyTextField(
               controller: username,
-              hint: 'Masukkan Username Anda...',
+              hint: 'Masukkan username',
               label: 'Username',
             ),
-          ),
-          Container(
-            margin: const EdgeInsets.only(top: 20),
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: MyPassWordField(
+            const SizedBox(height: 20),
+            MyPassWordField(
               controller: password,
               obsecure: obscureText,
               label: 'Password',
               onvisibility: _togglePasswordVisibility,
             ),
-          ),
-          const SizedBox(height: 20),
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            // child: ElevatedButton(
-            //   onPressed: ,
-            //   child: const Text('Login'),
-            // ),
-          ),
-          const SizedBox(height: 20),
-          // TextButton(
-          //   onPressed: ,
-          //   child: const Text('Tidak punya akun? Sign up!'),
-          // ),
-        ],
+            const SizedBox(height: 20),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.purple,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              onPressed: () {
+                // login
+              },
+              child: const Text('Login'),
+            ),
+            const SizedBox(height: 10),
+            TextButton(
+              onPressed: () {
+                // ke signup
+              },
+              child: const Text(
+                'Tidak punya akun? Sign up!',
+                style: TextStyle(color: Colors.purple),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

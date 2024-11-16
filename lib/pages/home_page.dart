@@ -74,14 +74,14 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       ),
       drawer: CustomDrawer(
-        username: 'John Doe',
-        gender: 'Male',
+        username: 'Username',
+        gender: 'Gender',
         imagepath: 'assets/images/profile.jpg',
         boxColor: Colors.purple,
         buttons: [
-          {'name': 'Profile', 'target': '/profile'},
-          {'name': 'Settings', 'target': '/settings'},
-          {'name': 'Help', 'target': '/help'},
+          {'name': 'Pengaturan', 'target': '/setting'},
+          {'name': 'Login', 'target': '/login'},
+          {'name': 'Register', 'target': '/register'},
         ],
       ),
     );
