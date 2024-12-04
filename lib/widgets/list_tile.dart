@@ -14,13 +14,18 @@ class CustomListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final iconColor = isDarkMode ? Colors.white : Colors.black;
+    final textColor = isDarkMode ? Colors.white : Colors.black;
+    final trailingColor = isDarkMode ? Colors.grey[300] : Colors.grey;
+
     return ListTile(
-      leading: Icon(icon, color: Colors.black),
+      leading: Icon(icon, color: iconColor), // Adaptive icon color
       title: Text(
         title,
-        style: const TextStyle(color: Colors.black),
+        style: TextStyle(color: textColor), // Adaptive text color
       ),
-      trailing: const Icon(Icons.arrow_forward_ios, color: Colors.grey),
+      trailing: Icon(Icons.arrow_forward_ios, color: trailingColor), // Adaptive trailing icon color
       onTap: onTap,
     );
   }

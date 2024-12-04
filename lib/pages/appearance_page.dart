@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../controller/theme_controller.dart';
 
-class AppearancePage extends StatefulWidget {
+class AppearancePage extends StatelessWidget {
   const AppearancePage({super.key});
-
-  @override
-  State<AppearancePage> createState() => _AppearancePageState();
-}
-
-class _AppearancePageState extends State<AppearancePage> {
-  bool isDarkMode = false;
 
   @override
   Widget build(BuildContext context) {
@@ -19,19 +14,28 @@ class _AppearancePageState extends State<AppearancePage> {
       ),
       body: Column(
         children: [
-          // SwitchListTile(
-          //   activeColor: Colors.blueAccent,
-          //   inactiveThumbColor: Colors.grey,
-          //   value: isDarkMode,
-          //   onChanged: () {},
-          //   title: const Text('Enable Dark Mode'),
-          //   secondary: const Icon(Icons.dark_mode, color: Colors.black),
-          // ),
           ListTile(
-            leading: const Icon(Icons.color_lens, color: Colors.black),
-            title: const Text('Theme Colors'),
+            leading: Icon(
+              Provider.of<ThemeModeData>(context).isDarkModeActive
+                  ? Icons.dark_mode
+                  : Icons.light_mode,
+            ),
+            title: const Text('Dark Mode'),
+            trailing: Switch(
+              value: Provider.of<ThemeModeData>(context).isDarkModeActive,
+              onChanged: (bool value) {
+                Provider.of<ThemeModeData>(context, listen: false).changeTheme(
+                  value ? ThemeMode.dark : ThemeMode.light,
+                );
+              },
+            ),
             onTap: () {
-              // Add theme customization logic
+              Provider.of<ThemeModeData>(context, listen: false).changeTheme(
+                Provider.of<ThemeModeData>(context, listen: false)
+                        .isDarkModeActive
+                    ? ThemeMode.light
+                    : ThemeMode.dark,
+              );
             },
           ),
         ],

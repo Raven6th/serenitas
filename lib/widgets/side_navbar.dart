@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../controller/navigation.dart';
 
 class CustomDrawer extends StatefulWidget {
   final String username;
@@ -23,8 +25,9 @@ class CustomDrawer extends StatefulWidget {
 class _CustomDrawerState extends State<CustomDrawer> {
   @override
   Widget build(BuildContext context) {
+    final navigationProvider = Provider.of<NavigationProvider>(context);
     return Drawer(
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
       child: Column(
         children: [
           UserAccountsDrawerHeader(
@@ -43,7 +46,8 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 return ListTile(
                   title: Text(button['name'] ?? 'Unknown'),
                   onTap: () {
-                    Navigator.pushNamed(context, button['target'] ?? '/');
+                    navigationProvider.navigate(
+                      context, button['target'] ?? '/');
                   },
                 );
               },

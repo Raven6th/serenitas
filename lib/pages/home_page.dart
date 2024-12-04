@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:serenitas/widgets/side_navbar.dart';
 
-class MyHomePage extends StatefulWidget {
+class MyHomePage extends StatelessWidget {
   final TextEditingController? chat;
   MyHomePage({super.key, this.chat});
 
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
   final TextEditingController _chatController = TextEditingController();
 
   @override
@@ -82,6 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
           {'name': 'Pengaturan', 'target': '/setting'},
           {'name': 'Login', 'target': '/login'},
           {'name': 'Register', 'target': '/register'},
+          {'name': 'Chat', 'target': '/chat'},
         ],
       ),
     );

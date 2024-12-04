@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:serenitas/pages/appearance_page.dart';
+import 'package:serenitas/pages/profile_page.dart';
 import 'package:serenitas/widgets/list_tile.dart';
 import 'package:serenitas/widgets/section_header.dart';
 
-class MySettingsPage extends StatefulWidget {
+class MySettingsPage extends StatelessWidget {
   const MySettingsPage({super.key});
 
-  @override
-  State<MySettingsPage> createState() => _MySettingsPageState();
-}
-
-class _MySettingsPageState extends State<MySettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,7 +38,7 @@ class _MySettingsPageState extends State<MySettingsPage> {
                       Text(
                         'Username',
                         style: TextStyle(
-                          color: Colors.white,
+                          // color: Colors.white,
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                         ),
@@ -58,7 +55,11 @@ class _MySettingsPageState extends State<MySettingsPage> {
               icon: Icons.person,
               title: 'Profile',
               onTap: () {
-                Navigator.pushNamed(context, '/profile');
+                Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => ProfilePage(),
+                      ),
+                    );
               },
             ),
             CustomListTile(
@@ -73,17 +74,16 @@ class _MySettingsPageState extends State<MySettingsPage> {
               icon: Icons.color_lens,
               title: 'Tampilan',
               onTap: () {
-                Navigator.pushNamed(context, '/appearance');
+                Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => AppearancePage(),
+                      ),
+                    );
               },
             ),
 
             const SizedBox(height: 20),
             const SectionHeader(title: 'Support'),
-            CustomListTile(
-              icon: Icons.help_outline,
-              title: 'Help Center',
-              onTap: () {},
-            ),
             CustomListTile(
               icon: Icons.info_outline,
               title: 'About',
@@ -93,7 +93,7 @@ class _MySettingsPageState extends State<MySettingsPage> {
           ],
         ),
       ),
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
     );
   }
 }

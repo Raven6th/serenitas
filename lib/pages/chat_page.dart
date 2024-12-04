@@ -64,6 +64,7 @@ class _MyChatRoomPageState extends State<MyChatRoomPage> {
           {'name': 'Pengaturan', 'target': '/setting'},
           {'name': 'Login', 'target': '/login'},
           {'name': 'Register', 'target': '/register'},
+          {'name': 'Home', 'target': '/home'},
         ],
       ),
     );
