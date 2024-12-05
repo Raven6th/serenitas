@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:serenitas/controller/account.dart';
 import 'package:serenitas/controller/navigation.dart';
 import 'package:serenitas/pages/appearance_page.dart';
 import 'package:serenitas/pages/chat_page.dart';
@@ -21,14 +22,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (BuildContext context) => ThemeModeData()),
+        ChangeNotifierProvider(create: (BuildContext context) => ThemeModeData()..setInitialTheme()),
         ChangeNotifierProvider(create: (BuildContext context) => NavigationProvider()),
+        ChangeNotifierProvider(create: (BuildContext context) => AccountData()),
       ],
       child: Consumer<ThemeModeData>(
         builder: (context, themeModeData, child) {
           return MaterialApp(
             title: 'Serenitas',
-            themeMode: themeModeData.themeMode, // Link themeMode dynamically
+            themeMode: themeModeData.themeMode,
             theme: ThemeData.light(useMaterial3: true),
             darkTheme: ThemeData.dark(useMaterial3: true),
             home: MyHomePage(),

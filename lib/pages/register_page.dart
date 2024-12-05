@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:serenitas/widgets/password_fields.dart';
-import 'package:serenitas/widgets/text_field.dart';
+
+import 'package:provider/provider.dart';
+
+import 'package:serenitas/controller/account.dart';
+
+import '../widgets/password_fields.dart';
+
+import '../widgets/text_field.dart';
 
 class MySignUpPage extends StatefulWidget {
   const MySignUpPage({super.key});
@@ -11,10 +17,15 @@ class MySignUpPage extends StatefulWidget {
 
 class _MySignUpPageState extends State<MySignUpPage> {
   final TextEditingController usernameController = TextEditingController();
+
   final TextEditingController passwordController = TextEditingController();
+
   final TextEditingController confirmPasswordController =
       TextEditingController();
+
   bool obscureText = true;
+  bool obscureConfirmText = true;
+
   String? _selectedGender;
 
   void _togglePasswordVisibility() {
@@ -22,12 +33,53 @@ class _MySignUpPageState extends State<MySignUpPage> {
       obscureText = !obscureText;
     });
   }
+  void _toggleConfirmPasswordVisibility() {
+    setState(() {
+      obscureConfirmText = !obscureConfirmText;
+    });
+  }
+
+  void _register(BuildContext context) {
+    final controller = Provider.of<AccountData>(context, listen: false);
+
+    if (passwordController.text != confirmPasswordController.text) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Password tidak sama.')),
+      );
+
+      return;
+    }
+
+    if (_selectedGender == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Mohon pilih jenis kelamin anda.')),
+      );
+
+      return;
+    }
+
+    final success = controller.register(
+      usernameController.text,
+      passwordController.text,
+      _selectedGender!,
+    );
+
+    if (success) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text('Registrasi berhasil!')));
+
+      Navigator.pushReplacementNamed(context, '/login');
+    } else {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text('Username sudah ada')));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: const Color.fromARGB(255, 245, 245, 245),
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: const Color.fromARGB(255, 157, 54, 175),
         title: const Text(
           'Sign Up',
@@ -43,7 +95,7 @@ class _MySignUpPageState extends State<MySignUpPage> {
             const SizedBox(height: 20),
             MyTextField(
               controller: usernameController,
-              hint: 'Masukkan username...',
+              hint: 'Masukkan username',
               label: 'Username',
             ),
             const SizedBox(height: 20),
@@ -56,37 +108,18 @@ class _MySignUpPageState extends State<MySignUpPage> {
             const SizedBox(height: 20),
             MyPassWordField(
               controller: confirmPasswordController,
-              obsecure: obscureText,
-              label: 'Konfirmasi Password',
-              onvisibility: _togglePasswordVisibility,
+              obsecure: obscureConfirmText,
+              label: 'Confirm Password',
+              onvisibility: _toggleConfirmPasswordVisibility,
             ),
             const SizedBox(height: 20),
-            Row(
-              children: [
-                Radio<String>(
-                  value: 'Male',
-                  groupValue: _selectedGender,
-                  onChanged: (value) {
-                    setState(() {
-                      _selectedGender = value;
-                    });
-                  },
-                ),
-                const Text('Male'),
-              ],
-            ),
-            Row(
-              children: [
-                Radio<String>(
-                  value: 'Female',
-                  groupValue: _selectedGender,
-                  onChanged: (value) {
-                    setState(() {
-                      _selectedGender = value;
-                    });
-                  },
-                ),
-                const Text('Female'),
+            DropdownButtonFormField<String>(
+              value: _selectedGender,
+              onChanged: (value) => setState(() => _selectedGender = value),
+              decoration: const InputDecoration(labelText: 'Gender'),
+              items: const [
+                DropdownMenuItem(value: 'Male', child: Text('Male')),
+                DropdownMenuItem(value: 'Female', child: Text('Female')),
               ],
             ),
             const SizedBox(height: 20),
@@ -97,10 +130,8 @@ class _MySignUpPageState extends State<MySignUpPage> {
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
-              onPressed: () {
-                // sign up/register
-              },
-              child: Text('Sign Up', style: TextStyle(color: Colors.black),),
+              onPressed: () => _register(context),
+              child: const Text('Register'),
             ),
           ],
         ),

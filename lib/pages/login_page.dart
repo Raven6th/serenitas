@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:serenitas/widgets/text_field.dart';
+import 'package:provider/provider.dart';
+import 'package:serenitas/controller/account.dart';
+import '../widgets/text_field.dart';
 import '../widgets/password_fields.dart';
 
 class MyLoginPage extends StatefulWidget {
@@ -20,17 +22,27 @@ class _MyLoginPageState extends State<MyLoginPage> {
     });
   }
 
+  void _login(BuildContext context) {
+    final controller = Provider.of<AccountData>(context, listen: false);
+    final success = controller.login(username.text, password.text);
+    if (success) {
+      Navigator.pushReplacementNamed(context, '/home');
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Username atau password salah!')),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: const Color.fromARGB(255, 245, 245, 245),
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 157, 54, 175),
-        title: const Text(
-          'Login',
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-        ),
+        title: const Text('Login',
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
         centerTitle: true,
+        automaticallyImplyLeading: true, // Ensure the back button is displayed
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
@@ -39,10 +51,9 @@ class _MyLoginPageState extends State<MyLoginPage> {
           children: [
             const SizedBox(height: 20),
             MyTextField(
-              controller: username,
-              hint: 'Masukkan username',
-              label: 'Username',
-            ),
+                controller: username,
+                hint: 'Masukkan username',
+                label: 'Username'),
             const SizedBox(height: 20),
             MyPassWordField(
               controller: password,
@@ -58,20 +69,16 @@ class _MyLoginPageState extends State<MyLoginPage> {
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
-              onPressed: () {
-                // login
-              },
+              onPressed: () => _login(context),
               child: const Text('Login'),
             ),
             const SizedBox(height: 10),
             TextButton(
               onPressed: () {
-                // ke signup
+                Navigator.pushNamed(context, '/register');
               },
-              child: const Text(
-                'Tidak punya akun? Sign up!',
-                style: TextStyle(color: Colors.purple),
-              ),
+              child: const Text("Tidak punya akun? Sign up!",
+                  style: TextStyle(color: Colors.purple)),
             ),
           ],
         ),

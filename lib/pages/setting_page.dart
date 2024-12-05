@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:serenitas/pages/appearance_page.dart';
 import 'package:serenitas/pages/profile_page.dart';
 import 'package:serenitas/widgets/list_tile.dart';
 import 'package:serenitas/widgets/section_header.dart';
@@ -27,8 +26,8 @@ class MySettingsPage extends StatelessWidget {
                   // User avatar
                   const CircleAvatar(
                     radius: 40,
-                    backgroundImage:
-                        AssetImage('assets/images/user_avatar.png'), // Replace with your asset
+                    backgroundImage: AssetImage(
+                        'assets/images/user_avatar.png'),
                   ),
                   const SizedBox(width: 16),
                   // User info
@@ -48,18 +47,13 @@ class MySettingsPage extends StatelessWidget {
                 ],
               ),
             ),
-
             const SizedBox(height: 20),
             const SectionHeader(title: 'Account'),
             CustomListTile(
               icon: Icons.person,
               title: 'Profile',
               onTap: () {
-                Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_) => ProfilePage(),
-                      ),
-                    );
+                Navigator.pushNamed(context, '/profile');
               },
             ),
             CustomListTile(
@@ -67,21 +61,15 @@ class MySettingsPage extends StatelessWidget {
               title: 'Privasi & Keamanan',
               onTap: () {},
             ),
-
             const SizedBox(height: 20),
             const SectionHeader(title: 'Pengaturan Aplikasi'),
             CustomListTile(
               icon: Icons.color_lens,
               title: 'Tampilan',
               onTap: () {
-                Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_) => AppearancePage(),
-                      ),
-                    );
+                Navigator.pushNamed(context, '/appearance');
               },
             ),
-
             const SizedBox(height: 20),
             const SectionHeader(title: 'Support'),
             CustomListTile(

@@ -22,6 +22,31 @@ class _MyChatRoomPageState extends State<MyChatRoomPage> {
         backgroundColor: Colors.purpleAccent,
         title: const Text('Chat Room'),
         centerTitle: true,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/login');
+
+              },
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                decoration: BoxDecoration(
+                  color: Colors.purple,
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: const Text(
+                  'Login',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
       body: Column(
         children: [
@@ -56,8 +81,6 @@ class _MyChatRoomPageState extends State<MyChatRoomPage> {
         ],
       ),
       drawer: CustomDrawer(
-        username: 'Username',
-        gender: 'Gender',
         imagepath: 'assets/images/profile.jpg',
         boxColor: Colors.purple,
         buttons: [

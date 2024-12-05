@@ -7,6 +7,9 @@ class AppearancePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Listen to the current theme mode state
+    final themeModeData = Provider.of<ThemeModeData>(context);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.purple,
@@ -16,25 +19,20 @@ class AppearancePage extends StatelessWidget {
         children: [
           ListTile(
             leading: Icon(
-              Provider.of<ThemeModeData>(context).isDarkModeActive
-                  ? Icons.dark_mode
-                  : Icons.light_mode,
+              themeModeData.isDarkModeActive ? Icons.dark_mode : Icons.light_mode,
             ),
             title: const Text('Dark Mode'),
             trailing: Switch(
-              value: Provider.of<ThemeModeData>(context).isDarkModeActive,
+              value: themeModeData.isDarkModeActive, // Reflect current dark mode state
               onChanged: (bool value) {
-                Provider.of<ThemeModeData>(context, listen: false).changeTheme(
-                  value ? ThemeMode.dark : ThemeMode.light,
+                themeModeData.changeTheme(
+                  value ? ThemeMode.dark : ThemeMode.light, // Toggle theme on switch change
                 );
               },
             ),
             onTap: () {
-              Provider.of<ThemeModeData>(context, listen: false).changeTheme(
-                Provider.of<ThemeModeData>(context, listen: false)
-                        .isDarkModeActive
-                    ? ThemeMode.light
-                    : ThemeMode.dark,
+              themeModeData.changeTheme(
+                themeModeData.isDarkModeActive ? ThemeMode.light : ThemeMode.dark, // Toggle theme on tap
               );
             },
           ),
